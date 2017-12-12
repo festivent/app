@@ -1,0 +1,25 @@
+<span class="bg-overlay"></span>
+<ion-content padding text-center>
+    <ion-grid ion-fixed>
+        <ion-row class="welcome-logo" block center>
+            <h1>festivent</h1>
+        </ion-row>
+        <ion-row class="welcome-text" block center>
+            <p>Etkinliklere ulaşmanın en hızlı yolu.</p>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<ion-footer>
+    <ion-grid>
+        <ion-row class="welcome-login" block center>
+            <button [navPush]="loginPage" class="login-button" ion-button large block>Giriş yap</button>
+            <button [navPush]="registerPage" ion-button clear large block>Bir hesabın yok mu?</button>
+        </ion-row>
+    </ion-grid>
+</ion-footer>
+
+<div class="legal-notice">
+    <p>By Signing up you agree to the</p>
+    <p><a ng-click="showTerms()">Terms of Service</a> and <a ng-click="showPrivacyPolicy()">Privacy Policy</a></p>
+</div>

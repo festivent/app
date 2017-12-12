@@ -1,0 +1,83 @@
+page-splash {
+  background: url("../assets/imgs/welcome-background.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+
+  // Transparent content
+  // Transparent content
+  ion-content {
+    background: transparent !important;
+
+    .welcome-logo {
+      padding-top: 64%;
+
+      h1 {
+        font-size: 50px;
+        font-family: cursive;
+        font-weight: 600;
+        font-style: italic;
+        color: #FFF;
+        margin: 0;
+      }
+    }
+
+    .welcome-text {
+
+      p {
+        font-size: 16px;
+        margin-top: 20px;
+        color: rgba(230,230,230,.8);
+      }
+    }
+  }
+
+  ion-footer::before {
+    background: none !important;
+  }
+
+  // Transparent footer
+  ion-footer {
+    background: transparent !important;
+    height: 34%;
+
+    .welcome-login {
+      //margin-top: 30%;
+
+      .login-button {
+        width: 80%;
+        margin: auto;
+      }
+
+      [clear] {
+        color: rgba(230,230,230,.8);
+        font-size: 16px;
+        margin-top: 2%;
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  .legal-notice {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    z-index: 100;
+    display: block;
+    width: 100%;
+    text-align: center;
+
+    p {
+      color: rgba(230,230,230,.8);
+      margin: 0;
+      text-align: center;
+      font-size: small;
+    }
+
+    a {
+      text-decoration: none;
+      font-weight: 600;
+      color: #FFF;
+    }
+  }
+}
