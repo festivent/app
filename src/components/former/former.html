@@ -1,0 +1,57 @@
+<form *ngIf="ready" (submit)="submit()" novalidate>
+    <ion-list>
+        <ion-item *ngFor="let field of form.fields" [ngSwitch]="field.type">
+            <ion-label color="danger" stacked *ngIf="hasError(field.name)">{{ errors[field.name] }}</ion-label>
+            <ion-input
+                    *ngSwitchCase="'text'"
+                    type="text"
+                    [(ngModel)]="form.model[field.name]"
+                    [ngModelOptions]="{standalone: true}"
+                    [class.invalid]="hasError(field.name)"
+                    [attr.name]="field.name"
+                    placeholder="{{ placeholders[field.name] }}"></ion-input>
+            <ion-input
+                    *ngSwitchCase="'email'"
+                    type="email"
+                    [(ngModel)]="form.model[field.name]"
+                    [ngModelOptions]="{standalone: true}"
+                    [class.invalid]="hasError(field.name)"
+                    [attr.name]="field.name"
+                    placeholder="{{ placeholders[field.name] }}"></ion-input>
+            <ion-input
+                    *ngSwitchCase="'password'"
+                    type="password"
+                    [(ngModel)]="form.model[field.name]"
+                    [ngModelOptions]="{standalone: true}"
+                    [attr.name]="field.name"
+                    placeholder="{{ placeholders[field.name] }}"></ion-input>
+
+            <ion-label *ngSwitchCase="'select'">
+                {{ placeholders[field.name] }}
+            </ion-label>
+            <ion-select
+                    *ngSwitchCase="'select'"
+                    [(ngModel)]="form.model[field.name]"
+                    [ngModelOptions]="{standalone: true}"
+                    [attr.name]="field.name">
+                <ion-option *ngFor="let option of field.items" [value]="option">
+                    {{ 'options.' + field.name + '.' + option | translate }}
+                </ion-option>
+            </ion-select>
+
+            <ion-label *ngSwitchCase="'datetime'">
+                {{ placeholders[field.name] }}
+            </ion-label>
+            <ion-datetime
+                    *ngSwitchCase="'datetime'"
+                    [(ngModel)]="form.model[field.name]"
+                    [ngModelOptions]="{standalone: true}"
+                    [attr.name]="field.name"
+                    displayFormat="{{ field.displayFormat ? field.displayFormat : 'YYYY/MM/DD' }}"></ion-datetime>
+        </ion-item>
+    </ion-list>
+
+    <div padding>
+        <button type="submit" ion-button block>{{ form.submitText ? form.submitText : 'Submit' }}</button>
+    </div>
+</form>

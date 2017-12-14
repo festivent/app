@@ -1,76 +1,80 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>Yeni hesap oluştur</ion-title>
+        <ion-title>Hesap oluştur</ion-title>
     </ion-navbar>
 </ion-header>
 
 
 <ion-content>
-    <form [formGroup]="registerForm" (submit)="register()" novalidate>
-        <ion-list>
-            <ion-item>
-                <ion-label color="danger" stacked *ngIf="hasError('name')">
-                    Ad değeri en az 3 an fazla 127 karakter olmalıdır.
-                </ion-label>
-                <ion-input #name
-                           formControlName="name"
-                           type="text"
-                           placeholder="Ad"
-                           [class.invalid]="hasError('name')"
-                ></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label color="danger" stacked *ngIf="hasError('email')">
-                    Geçerli bir e-posta adresi ve 127 karakterden az olmalıdır.
-                </ion-label>
-                <ion-input #email
-                           formControlName="email"
-                           type="text"
-                           placeholder="E-Posta"
-                           [class.invalid]="hasError('email')"
-                ></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label color="danger" stacked *ngIf="hasError('password')">
-                    Büyük, küçük harf ve sayı içermeli, 8 karakterden büyük olmalı.
-                </ion-label>
-                <ion-input #password
-                           formControlName="password"
-                           type="password"
-                           placeholder="Şifre"
-                           [class.invalid]="hasError('password')"
-                ></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label color="danger" stacked *ngIf="hasError('password_confirmation')">
-                    Şifreler eşleşmiyor.
-                </ion-label>
-                <ion-input #password_confirmation
-                           formControlName="password_confirmation"
-                           type="password"
-                           placeholder="Şifre Doğrula"
-                           [class.invalid]="hasError('password_confirmation')"
-                ></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label [color]="hasError('gender') ? 'danger' : ''">
-                    Cinsiyet
-                </ion-label>
-                <ion-select #gender formControlName="gender">
-                    <ion-option [value]="genderHelper.FEMALE">Kadın</ion-option>
-                    <ion-option [value]="genderHelper.MALE">Erkek</ion-option>
-                </ion-select>
-            </ion-item>
-            <ion-item>
-                <ion-label [color]="hasError('birth_at') ? 'danger' : ''">
-                    Doğum Günü
-                </ion-label>
-                <ion-datetime #birth_at formControlName="birth_at" displayFormat="DD/MM/YYYY"></ion-datetime>
-            </ion-item>
-        </ion-list>
+    <former [form]="registerForm"></former>
+    <!--<form [formGroup]="registerForm" (submit)="register()" novalidate>-->
+        <!--<ion-list>-->
+            <!--<ion-item>-->
+                <!--<ion-input #name-->
+                           <!--formControlName="name"-->
+                           <!--type="text"-->
+                           <!--placeholder="Ad"-->
+                           <!--[class.invalid]="hasError('name')"-->
+                <!--&gt;</ion-input>-->
+                <!--<ion-label color="danger" stacked>-->
+                    <!--foo-->
+                <!--</ion-label>-->
+                <!--<ion-label color="danger" stacked>-->
+                    <!--bar-->
+                <!--</ion-label>-->
+            <!--</ion-item>-->
+            <!--<ion-item>-->
+                <!--<ion-label color="danger" stacked *ngIf="hasError('email')">-->
+                    <!--Geçerli bir e-posta adresi ve 127 karakterden az olmalıdır.-->
+                <!--</ion-label>-->
+                <!--<ion-input #email-->
+                           <!--formControlName="email"-->
+                           <!--type="text"-->
+                           <!--placeholder="E-Posta"-->
+                           <!--[class.invalid]="hasError('email')"-->
+                <!--&gt;</ion-input>-->
+            <!--</ion-item>-->
+            <!--<ion-item>-->
+                <!--<ion-label color="danger" stacked *ngIf="hasError('password')">-->
+                    <!--Büyük, küçük harf ve sayı içermeli, 8 karakterden büyük olmalı.-->
+                <!--</ion-label> baka-->
+                <!--<ion-input #password-->
+                           <!--formControlName="password"-->
+                           <!--type="password"-->
+                           <!--placeholder="Şifre"-->
+                           <!--[class.invalid]="hasError('password')"-->
+                <!--&gt;</ion-input>-->
+            <!--</ion-item>-->
+            <!--<ion-item>-->
+                <!--<ion-label color="danger" stacked *ngIf="hasError('password_confirmation')">-->
+                    <!--Şifreler eşleşmiyor.-->
+                <!--</ion-label>-->
+                <!--<ion-input #password_confirmation-->
+                           <!--formControlName="password_confirmation"-->
+                           <!--type="password"-->
+                           <!--placeholder="Şifre Doğrula"-->
+                           <!--[class.invalid]="hasError('password_confirmation')"-->
+                <!--&gt;</ion-input>-->
+            <!--</ion-item>-->
+            <!--<ion-item>-->
+                <!--<ion-label [color]="hasError('gender') ? 'danger' : ''">-->
+                    <!--Cinsiyet-->
+                <!--</ion-label>-->
+                <!--<ion-select #gender formControlName="gender">-->
+                    <!--<ion-option [value]="genderHelper.FEMALE">Kadın</ion-option>-->
+                    <!--<ion-option [value]="genderHelper.MALE">Erkek</ion-option>-->
+                <!--</ion-select>-->
+            <!--</ion-item>-->
+            <!--<ion-item>-->
+                <!--<ion-label [color]="hasError('birth_at') ? 'danger' : ''">-->
+                    <!--Doğum Günü-->
+                <!--</ion-label>-->
+                <!--<ion-datetime #birth_at formControlName="birth_at" displayFormat="DD/MM/YYYY"></ion-datetime>-->
+            <!--</ion-item>-->
+        <!--</ion-list>-->
 
-        <div padding>
-            <button type="submit" [disabled]="!registerForm.valid" ion-button block>Hesap oluştur</button>
-        </div>
-    </form>
+        <!--<div padding>-->
+            <!--<button type="submit" ion-button block>Hesap oluştur</button>-->
+        <!--</div>-->
+    <!--</form>-->
 </ion-content>

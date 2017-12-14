@@ -1,11 +1,9 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController} from 'ionic-angular';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {EmailValidator} from "../../../validators/emailValidator";
-import {PasswordValidator} from "../../../validators/passwordValidator";
-import {ConfirmedValidator} from "../../../validators/confirmedValidator";
+import {App, IonicPage} from 'ionic-angular';
 import {GenderHelper} from "../../../helpers/genderHelper";
-import {GenderValidator} from "../../../validators/genderValidator";
+import {Form} from "../../../models/former/form";
+import {TabsPage} from "../../tabs/tabs";
+import {AuthProvider} from "../../../providers/auth/auth";
 
 @IonicPage()
 @Component({
@@ -13,66 +11,56 @@ import {GenderValidator} from "../../../validators/genderValidator";
     templateUrl: 'register.html',
 })
 export class RegisterPage {
-    public registerForm: FormGroup;
-    public genderHelper = GenderHelper;
-
-    constructor(
-        public navCtrl: NavController,
-        public formBuilder: FormBuilder
-    ) {
-        this.registerForm = formBuilder.group({
-            name: ['', Validators.compose([
-                Validators.required,
-                Validators.minLength(3),
-                Validators.maxLength(127)
-            ])],
-            email: ['', Validators.compose([
-                Validators.required,
-                Validators.maxLength(127),
-                EmailValidator.isValid
-            ])],
-            password: ['', Validators.compose([
-                Validators.required,
-                Validators.minLength(8),
-                Validators.maxLength(32),
-                PasswordValidator.isValid
-            ])],
-            password_confirmation: ['', Validators.compose([
-                Validators.required,
-                Validators.minLength(8),
-                Validators.maxLength(32),
-                PasswordValidator.isValid
-            ])],
-            gender: ['', Validators.compose([
-                Validators.required,
-                GenderValidator.isValid
-            ])],
-            birth_at: ['', Validators.compose([
-                Validators.required
-            ])]
-        }, {
-            validator: ConfirmedValidator.isValid('password', 'password_confirmation')
-        });
-    }
+    public registerForm: Form;
 
     /**
-     * Check the field has error.
+     * Register page.
      *
-     * @param {string} name
-     * @returns {boolean}
+     * @param {AuthProvider} auth
+     * @param {App} app
      */
-    public hasError(name: string)
-    {
-        return this.registerForm.controls[name].touched && !this.registerForm.controls[name].valid;
-    }
+    constructor(
+        private auth: AuthProvider,
+        private app: App
+    ) {
+        this.registerForm = {
+            method: 'POST',
+            action: 'auth/register',
+            submitText: 'Oluştur',
+            fields: [
+                {
+                    name: 'name',
+                    type: 'text'
+                },
+                {
+                    name: 'email',
+                    type: 'email'
+                },
+                {
+                    name: 'password',
+                    type: 'password'
+                },
+                {
+                    name: 'password_confirmation',
+                    type: 'password'
+                },
+                {
+                    name: 'gender',
+                    type: 'select',
+                    items: GenderHelper.all()
+                },
+                {
+                    name: 'birth_at',
+                    type: 'datetime',
+                    displayFormat: 'DD/MM/YYYY'
+                }
+            ],
+            success: (result) => {
+                this.auth.setToken(result.token);
+                this.auth.setUser(result.data);
 
-    public register()
-    {
-        console.log(this.registerForm);
+                this.app.getRootNav().push(TabsPage);
+            }
+        };
     }
-
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad RegisterPage');
-    }
-
 }

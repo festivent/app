@@ -18,10 +18,17 @@ import {LoginPage} from "../pages/auth/login/login";
 import {RegisterPage} from "../pages/auth/register/register";
 import {TermsPage} from "../pages/common/terms/terms";
 import {PrivacyPage} from "../pages/common/privacy/privacy";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {AppTranslateLoader} from "./app.translate.loader";
+import {ControlErrorComponent} from "../components/control-error/control-error";
+import {FormerComponent} from "../components/former/former";
+import {IonicStorageModule} from "@ionic/storage";
 
 @NgModule({
     declarations: [
         MyApp,
+        ControlErrorComponent,
+        FormerComponent,
         AboutPage,
         ContactPage,
         HomePage,
@@ -35,13 +42,22 @@ import {PrivacyPage} from "../pages/common/privacy/privacy";
     imports: [
         BrowserModule,
         HttpClientModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useClass: AppTranslateLoader
+            }
+        }),
         IonicModule.forRoot(MyApp, {
             backButtonText: ''
-        })
+        }),
+        IonicStorageModule.forRoot()
     ],
     bootstrap: [IonicApp],
     entryComponents: [
         MyApp,
+        ControlErrorComponent,
+        FormerComponent,
         AboutPage,
         ContactPage,
         HomePage,
