@@ -13,7 +13,7 @@ export class AuthProvider {
      *
      * @type {string}
      */
-    public static API: string = 'http://festivent.local/api/';
+    public static API: string = 'http://festivent.kodizm.com/api/';
 
     /**
      * The auth status observable.
