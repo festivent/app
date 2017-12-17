@@ -25,7 +25,29 @@
                     [ngModelOptions]="{standalone: true}"
                     [attr.name]="field.name"
                     placeholder="{{ placeholders[field.name] }}"></ion-input>
-
+            <ion-input
+                    *ngSwitchCase="'number'"
+                    type="number"
+                    [(ngModel)]="form.model[field.name]"
+                    [ngModelOptions]="{standalone: true}"
+                    [class.invalid]="hasError(field.name)"
+                    [attr.name]="field.name"
+                    placeholder="{{ placeholders[field.name] }}"></ion-input>
+            <ion-textarea
+                    *ngSwitchCase="'textarea'"
+                    [(ngModel)]="form.model[field.name]"
+                    [ngModelOptions]="{standalone: true}"
+                    [class.invalid]="hasError(field.name)"
+                    [attr.name]="field.name"
+                    placeholder="{{ placeholders[field.name] }}"></ion-textarea>
+            <ion-input
+                    *ngSwitchCase="'image'"
+                    type="file"
+                    [(ngModel)]="form.model[field.name]"
+                    [ngModelOptions]="{standalone: true}"
+                    [class.invalid]="hasError(field.name)"
+                    [attr.name]="field.name"
+                    placeholder="{{ placeholders[field.name] }}"></ion-input>
             <ion-label *ngSwitchCase="'select'">
                 {{ placeholders[field.name] }}
             </ion-label>

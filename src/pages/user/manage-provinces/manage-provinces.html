@@ -1,0 +1,48 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>İlgilendiğim Şehirler</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-searchbar
+            [cancelButtonText]="'İptal'"
+            [showCancelButton]="true"
+            (ionInput)="searchProvinces($event)"
+            (ionCancel)="cancelSearch()"></ion-searchbar>
+
+    <div *ngIf="isSearching">
+        <ion-list *ngIf="resultProvinces.length">
+            <button ion-item *ngFor="let province of resultProvinces" (click)="addProvince(province)">
+                {{ province.name }}
+            </button>
+        </ion-list>
+
+        <ion-card *ngIf="!resultProvinces.length">
+            <ion-card-content>
+                Aranılan kriterlere uygun değer bulunamamıştır.
+            </ion-card-content>
+        </ion-card>
+    </div>
+
+    <div *ngIf="!isSearching">
+        <ion-card *ngIf="!userProvinces.length">
+            <ion-card-content>
+                Takip etmek istediğini aratarak, takip etmeye başlayabilmek için seçebilirsin.
+            </ion-card-content>
+        </ion-card>
+
+        <ion-list *ngIf="userProvinces.length">
+            <ion-item-divider color="light">Takip Edilenler</ion-item-divider>
+            <ion-item-sliding *ngFor="let province of userProvinces">
+                <ion-item>{{ province.name }}</ion-item>
+                <ion-item-options side="right">
+                    <button ion-button color="red" (click)="deleteProvince(province)">
+                        <ion-icon name="trash"></ion-icon>
+                        Sil
+                    </button>
+                </ion-item-options>
+            </ion-item-sliding>
+        </ion-list>
+    </div>
+</ion-content>

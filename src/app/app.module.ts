@@ -1,15 +1,9 @@
 import {ErrorHandler, NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-
 import {BrowserModule} from '@angular/platform-browser';
 import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 import {MyApp} from './app.component';
-
-import {AboutPage} from '../pages/about/about';
-import {ContactPage} from '../pages/contact/contact';
-import {HomePage} from '../pages/home/home';
 import {TabsPage} from '../pages/tabs/tabs';
-
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {AuthProvider} from '../providers/auth/auth';
@@ -23,21 +17,32 @@ import {AppTranslateLoader} from "./app.translate.loader";
 import {ControlErrorComponent} from "../components/control-error/control-error";
 import {FormerComponent} from "../components/former/former";
 import {IonicStorageModule} from "@ionic/storage";
+import {UserHomePage} from "../pages/user/user-home/user-home";
+import {ManageCategoriesPage} from "../pages/user/manage-categories/manage-categories";
+import {ManageProvincesPage} from "../pages/user/manage-provinces/manage-provinces";
+import {HomeEventsPage} from "../pages/events/home-events/home-events";
+import {SearchEventsPage} from "../pages/events/search-events/search-events";
+import {ShowEventPage} from "../pages/events/show-event/show-event";
+import {CreateEventPage} from "../pages/events/create-event/create-event";
 
 @NgModule({
     declarations: [
         MyApp,
         ControlErrorComponent,
         FormerComponent,
-        AboutPage,
-        ContactPage,
-        HomePage,
         TabsPage,
         SplashPage,
         LoginPage,
         RegisterPage,
         TermsPage,
-        PrivacyPage
+        PrivacyPage,
+        UserHomePage,
+        ManageCategoriesPage,
+        ManageProvincesPage,
+        HomeEventsPage,
+        SearchEventsPage,
+        ShowEventPage,
+        CreateEventPage
     ],
     imports: [
         BrowserModule,
@@ -58,15 +63,19 @@ import {IonicStorageModule} from "@ionic/storage";
         MyApp,
         ControlErrorComponent,
         FormerComponent,
-        AboutPage,
-        ContactPage,
-        HomePage,
         TabsPage,
         SplashPage,
         LoginPage,
         RegisterPage,
         TermsPage,
-        PrivacyPage
+        PrivacyPage,
+        UserHomePage,
+        ManageCategoriesPage,
+        ManageProvincesPage,
+        HomeEventsPage,
+        SearchEventsPage,
+        ShowEventPage,
+        CreateEventPage
     ],
     providers: [
         StatusBar,

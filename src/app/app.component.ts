@@ -21,15 +21,19 @@ export class MyApp {
         auth: AuthProvider,
         translate: TranslateService
     ) {
+        // Set default language.
         translate.setDefaultLang('tr');
 
-        auth.reload().then(check => {
+        // Let's start to listen to auth status.
+        auth.observable.subscribe(check => {
             if (check) {
                 this.nav.setRoot(TabsPage);
             } else {
                 this.nav.setRoot(SplashPage);
             }
         });
+
+        auth.reload();
 
         platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.

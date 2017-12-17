@@ -1,24 +1,15 @@
 import {Component} from '@angular/core';
-
-import {AboutPage} from '../about/about';
-import {ContactPage} from '../contact/contact';
-import {HomePage} from '../home/home';
-import {AuthProvider} from "../../providers/auth/auth";
+import {UserHomePage} from "../user/user-home/user-home";
+import {HomeEventsPage} from "../events/home-events/home-events";
+import {SearchEventsPage} from "../events/search-events/search-events";
+import {CreateEventPage} from "../events/create-event/create-event";
 
 @Component({
-  templateUrl: 'tabs.html'
+    templateUrl: 'tabs.html'
 })
 export class TabsPage {
-
-  tab1Root = HomePage;
-  tab2Root = AboutPage;
-  tab3Root = ContactPage;
-
-  constructor(auth: AuthProvider) {
-    auth.request('GET', 'provinces').then(result => {
-      console.log(result);
-    });
-
-    auth.refresh();
-  }
+    public homeEventsPage = HomeEventsPage;
+    public searchEventsPage = SearchEventsPage;
+    public createEventPage = CreateEventPage;
+    public userPage = UserHomePage;
 }

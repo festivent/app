@@ -1,0 +1,16 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Hesap</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-item-divider color="light">İlgi Alanlarım</ion-item-divider>
+        <button ion-item [navPush]="manageCategoriesPage">Kategoriler</button>
+        <button ion-item [navPush]="manageProvincesPage">İller / Şehirler</button>
+
+        <ion-item-divider color="light">Hesap</ion-item-divider>
+        <button ion-item (click)="doLogout()">Çıkış Yap</button>
+    </ion-list>
+</ion-content>

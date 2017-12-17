@@ -18,7 +18,15 @@ export const tr = {
         'password': 'Şifre',
         'password_confirmation': 'Şifre Doğrula',
         'gender': 'Cinsiyet',
-        'birth_at': 'Doğum Tarihi'
+        'birth_at': 'Doğum Tarihi',
+        'title': 'Başlık',
+        'description': 'Açıklama',
+        'image': 'Resim',
+        'started_at': 'Başlangıç Tarihi',
+        'ended_at': 'Bitiş Tarihi',
+        'price': 'Fiyat',
+        'capacity': 'Kapasite',
+        'age_limit': 'Yaş Sınırı'
     },
     'options': {
         'gender': {

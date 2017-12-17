@@ -1,8 +1,7 @@
 import {Component} from '@angular/core';
-import {App, IonicPage} from 'ionic-angular';
+import {IonicPage} from 'ionic-angular';
 import {GenderHelper} from "../../../helpers/genderHelper";
 import {Form} from "../../../models/former/form";
-import {TabsPage} from "../../tabs/tabs";
 import {AuthProvider} from "../../../providers/auth/auth";
 
 @IonicPage()
@@ -17,11 +16,9 @@ export class RegisterPage {
      * Register page.
      *
      * @param {AuthProvider} auth
-     * @param {App} app
      */
     constructor(
-        private auth: AuthProvider,
-        private app: App
+        private auth: AuthProvider
     ) {
         this.registerForm = {
             method: 'POST',
@@ -58,8 +55,6 @@ export class RegisterPage {
             success: (result) => {
                 this.auth.setToken(result.token);
                 this.auth.setUser(result.data);
-
-                this.app.getRootNav().push(TabsPage);
             }
         };
     }
