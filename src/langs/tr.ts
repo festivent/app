@@ -8,10 +8,9 @@ export const tr = {
     'by_signing_up_you_agree_to_these_policies': 'Giriş yaptığınız da bu politikaları kabul etmiş olursunuz.',
     'terms': 'Kullanım Şartları',
     'privacy': 'Gizlilik Politikası',
+    'create_account': 'Hesap Oluştur',
 
-    'validation': {
-        'required': ':attribute alanı gereklidir.'
-    },
+
     'attributes': {
         'name': 'Ad',
         'email': 'E-Posta',

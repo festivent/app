@@ -5,5 +5,172 @@
 </ion-header>
 
 <ion-content>
-    <former [form]="createForm"></former>
+    <div padding>
+        <ion-segment [(ngModel)]="page" [ngModelOptions]="{standalone: true}">
+            <ion-segment-button value="address">
+                Adres
+            </ion-segment-button>
+            <ion-segment-button value="event">
+                Etkinlik
+            </ion-segment-button>
+            <ion-segment-button value="category">
+                Kategori
+            </ion-segment-button>
+        </ion-segment>
+    </div>
+
+    <div [ngSwitch]="page">
+        <div *ngSwitchCase="'address'">
+            <div *ngIf="!showAddressForm">
+                <ion-searchbar
+                        [(ngModel)]="searchingAddress"
+                        placeholder="Adres ara..."
+                ></ion-searchbar>
+
+                <ion-list>
+                    <button ion-item (click)="showCreateAddressForm()">
+                        Adres bulunamadı, yeni oluştur.
+                    </button>
+                </ion-list>
+            </div>
+
+            <ion-list *ngIf="showAddressForm">
+                <ion-item>
+                    <ion-input
+                            [disabled]="selectedAddress.id"
+                            [(ngModel)]="selectedAddress.name"
+                            placeholder="Adı *"
+                            type="text"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-textarea
+                            [disabled]="selectedAddress.id"
+                            [(ngModel)]="selectedAddress.address"
+                            placeholder="Adres *"
+                            type="text"></ion-textarea>
+                </ion-item>
+                <ion-item>
+                    <ion-textarea
+                            [disabled]="selectedAddress.id"
+                            [(ngModel)]="selectedAddress.hint"
+                            placeholder="Tarif"
+                            type="text"></ion-textarea>
+                </ion-item>
+                <ion-item>
+                    <ion-label>İl</ion-label>
+                    <ion-select
+                            [disabled]="selectedAddress.id"
+                            [(ngModel)]="selectedAddress.province_id"
+                            (ionChange)="selectedProvince()"
+                    >
+                        <ion-option *ngFor="let province of provinces" [value]="province.id">
+                            {{ province.name }}
+                        </ion-option>
+                    </ion-select>
+                </ion-item>
+                <ion-item>
+                    <ion-label>İlçe</ion-label>
+                    <ion-select
+                            [disabled]="selectedAddress.id"
+                            [(ngModel)]="selectedAddress.county_id"
+                    >
+                        <ion-option *ngFor="let county of counties" [value]="county.id">
+                            {{ county.name }}
+                        </ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-list>
+        </div>
+
+        <ion-list *ngSwitchCase="'event'">
+            <ion-item>
+                <ion-input
+                        [(ngModel)]="event.title"
+                        placeholder="Başlık *"
+                        type="text"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-textarea
+                        [(ngModel)]="event.description"
+                        placeholder="Açıklama"
+                        type="text"></ion-textarea>
+            </ion-item>
+            <ion-item>
+                <ion-datetime
+                        [(ngModel)]="event.started_at"
+                        placeholder="Başlangıç Tarihi *"
+                        displayFormat="DD/MM/YYYY HH:mm"></ion-datetime>
+            </ion-item>
+            <ion-item>
+                <ion-datetime
+                        [(ngModel)]="event.ended_at"
+                        placeholder="Bitiş Tarihi"
+                        displayFormat="DD/MM/YYYY HH:mm"></ion-datetime>
+            </ion-item>
+            <ion-item>
+                <ion-input
+                        [(ngModel)]="event.price"
+                        placeholder="Fiyat (ücretsiz ise boş bırakın)"
+                        type="number"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-input
+                        [(ngModel)]="event.capacity"
+                        placeholder="Kapasite"
+                        type="number"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-input
+                        [(ngModel)]="event.age_limit"
+                        placeholder="Yaş Sınırı"
+                        type="number"></ion-input>
+            </ion-item>
+        </ion-list>
+
+        <div *ngSwitchCase="'category'">
+            <ion-list *ngIf="!clickedCategory">
+                <button *ngFor="let category of categories" ion-item (click)="openCategory(category)">
+                    <ion-icon [name]="category.icon" item-start></ion-icon>
+                    {{ category.name }}
+                </button>
+            </ion-list>
+
+            <ion-list *ngIf="clickedCategory">
+                <ion-item-divider color="light">{{ clickedCategory.name }}</ion-item-divider>
+
+                <button *ngFor="let childCategory of clickedCategory.children" ion-item (click)="clickCategory(childCategory)">
+                    <ion-icon [name]="childCategory.icon" item-start></ion-icon>
+                    {{ childCategory.name }}
+
+                    <ion-badge *ngIf="isSelectedCategory(childCategory)" color="secondary">Seçildi</ion-badge>
+                </button>
+
+                <button ion-item (click)="cancelCategory()">
+                    Geri
+                </button>
+            </ion-list>
+        </div>
+    </div>
 </ion-content>
+
+<ion-footer>
+    <div padding>
+        <button *ngIf="!canSubmit()" type="button" disabled ion-button block>
+            <em *ngIf="!isFilledAddressFields()">
+                Adres bilgileri eksik...
+            </em>
+
+            <em *ngIf="isFilledAddressFields() && !isFilledEventFields()">
+                Etkinlik bilgileri eksik...
+            </em>
+
+            <em *ngIf="isFilledAddressFields() && isFilledEventFields() && !isSelectedAnyCategory()">
+                En az bir kategori seçin...
+            </em>
+        </button>
+
+        <button *ngIf="canSubmit()" ion-button block>
+            Oluştur
+        </button>
+    </div>
+</ion-footer>
