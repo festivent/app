@@ -10,7 +10,7 @@
             placeholder="Etkinlik ara..."
     ></ion-searchbar>
 
-    <ion-card *ngFor="let event of resultEvents">
+    <ion-card *ngFor="let event of resultEvents" (click)="openEvent(event)">
         <ion-card-content>
             <ion-card-title>{{ event.title }}</ion-card-title>
             <p>{{ event.description }}</p>

@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
-import {IonicPage} from 'ionic-angular';
+import {IonicPage, ModalController} from 'ionic-angular';
 import {Event} from "../../../models/event";
 import {AuthProvider} from "../../../providers/auth/auth";
+import {ShowEventPage} from "../show-event/show-event";
 
 @IonicPage()
 @Component({
@@ -12,7 +13,7 @@ export class SearchEventsPage
 {
     public resultEvents: Event[] = [];
 
-    constructor(private auth: AuthProvider)
+    constructor(private auth: AuthProvider, private modalCtrl: ModalController)
     {
 
     }
@@ -34,5 +35,12 @@ export class SearchEventsPage
                 this.resultEvents = response.data;
             });
         }
+    }
+
+    public openEvent(event: Event): void
+    {
+        this.modalCtrl.create(ShowEventPage, {
+            id: event.id
+        }).present();
     }
 }
