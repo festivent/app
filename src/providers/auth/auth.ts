@@ -141,9 +141,18 @@ export class AuthProvider {
     {
         return new Promise((resolve, reject) => {
             let options = {
-                body: data ? data : {},
                 headers: {}
             };
+
+            if (method == 'GET') {
+                if (data) {
+                    options['params'] = data;
+                }
+            } else {
+                if (data) {
+                    options['body'] = data;
+                }
+            }
 
             if (this.check()) {
                 options.headers['Authorization'] = `Bearer ${this.token}`;

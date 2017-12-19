@@ -63,3 +63,7 @@ ion-list {
 .item-md ion-icon[item-start] + .item-inner {
   margin-left: 0;
 }
+
+.item-label-stacked ion-label:not(.label-md-danger) {
+  display: none;
+}

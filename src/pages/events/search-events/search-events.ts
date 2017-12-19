@@ -1,25 +1,38 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
-
-/**
- * Generated class for the SearchEventsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import {IonicPage} from 'ionic-angular';
+import {Event} from "../../../models/event";
+import {AuthProvider} from "../../../providers/auth/auth";
 
 @IonicPage()
 @Component({
-  selector: 'page-search-events',
-  templateUrl: 'search-events.html',
+    selector: 'page-search-events',
+    templateUrl: 'search-events.html',
 })
-export class SearchEventsPage {
+export class SearchEventsPage
+{
+    public resultEvents: Event[] = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+    constructor(private auth: AuthProvider)
+    {
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SearchEventsPage');
-  }
+    }
 
+    ionViewDidLoad()
+    {
+        console.log('ionViewDidLoad SearchEventsPage');
+    }
+
+    public searchEvents(event): void
+    {
+        let query = event.target.value;
+
+        this.resultEvents = [];
+        if (query && query.length >= 3) {
+            this.auth.request('GET', 'events/search', {
+                query: query
+            }).then(response => {
+                this.resultEvents = response.data;
+            });
+        }
+    }
 }

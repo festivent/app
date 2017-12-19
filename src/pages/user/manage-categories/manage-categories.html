@@ -5,48 +5,87 @@
 </ion-header>
 
 <ion-content>
-    <ion-searchbar
-            [cancelButtonText]="'İptal'"
-            [showCancelButton]="true"
-            (ionInput)="searchCategories($event)"
-            (ionCancel)="cancelSearch()"></ion-searchbar>
+    <ion-list *ngIf="!clickedCategory">
+        <button *ngFor="let category of categories" ion-item (click)="clickCategory(category)">
+            <ion-icon [name]="category.icon" item-start></ion-icon>
+            {{ category.name }}
+        </button>
+    </ion-list>
 
-    <div *ngIf="isSearching">
-        <ion-list *ngIf="resultCategories.length">
-            <button ion-item *ngFor="let category of resultCategories" (click)="addCategory(category)">
+    <ion-list *ngIf="clickedCategory">
+        <ion-item-divider color="light">{{ clickedCategory.name }}</ion-item-divider>
+
+        <button
+                *ngFor="let childCategory of clickedCategory.children"
+                [disabled]="userCategories.indexOf(childCategory) >= 0"
+                (click)="addCategory(childCategory)"
+                ion-item>
+            <ion-icon [name]="childCategory.icon" item-start></ion-icon>
+            {{ childCategory.name }}
+        </button>
+
+        <button ion-item (click)="cancelCategory()">
+            Geri
+        </button>
+    </ion-list>
+
+    <ion-list *ngIf="userCategories.length">
+        <ion-item-divider color="light">Takip Ettiklerim</ion-item-divider>
+
+        <ion-item-sliding *ngFor="let category of userCategories">
+            <ion-item>
                 <ion-icon [name]="category.icon" item-start></ion-icon>
                 {{ category.name }}
-            </button>
-        </ion-list>
+            </ion-item>
+            <ion-item-options side="right">
+                <button ion-button color="red" (click)="deleteCategory(category)">
+                    <ion-icon name="trash"></ion-icon>
+                    Sil
+                </button>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
 
-        <ion-card *ngIf="!resultCategories.length">
-            <ion-card-content>
-                Aranılan kriterlere uygun değer bulunamamıştır.
-            </ion-card-content>
-        </ion-card>
-    </div>
+    <ion-card-content *ngIf="!userCategories.length">
+        Henüz takip ettiğin bir kategori yok. Takip etmeye başlayabilmek için kategori seçebilirsin.
+    </ion-card-content>
 
-    <div *ngIf="!isSearching">
-        <ion-card *ngIf="!userCategories.length">
-            <ion-card-content>
-                Takip etmek istediğini aratarak, takip etmeye başlayabilmek için seçebilirsin.
-            </ion-card-content>
-        </ion-card>
+    <!--<div *ngIf="isSearching">-->
+        <!--<ion-list *ngIf="resultCategories.length">-->
+            <!--<button ion-item *ngFor="let category of resultCategories" (click)="addCategory(category)">-->
+                <!--<ion-icon [name]="category.icon" item-start></ion-icon>-->
+                <!--{{ category.name }}-->
+            <!--</button>-->
+        <!--</ion-list>-->
 
-        <ion-list *ngIf="userCategories.length">
-            <ion-item-divider color="light">Takip Edilenler</ion-item-divider>
-            <ion-item-sliding *ngFor="let category of userCategories">
-                <ion-item>
-                    <ion-icon [name]="category.icon" item-start></ion-icon>
-                    {{ category.name }}
-                </ion-item>
-                <ion-item-options side="right">
-                    <button ion-button color="red" (click)="deleteCategory(category)">
-                        <ion-icon name="trash"></ion-icon>
-                        Sil
-                    </button>
-                </ion-item-options>
-            </ion-item-sliding>
-        </ion-list>
-    </div>
+        <!--<ion-card *ngIf="!resultCategories.length">-->
+            <!--<ion-card-content>-->
+                <!--Aranılan kriterlere uygun değer bulunamamıştır.-->
+            <!--</ion-card-content>-->
+        <!--</ion-card>-->
+    <!--</div>-->
+
+    <!--<div *ngIf="!isSearching">-->
+        <!--<ion-card *ngIf="!userCategories.length">-->
+            <!--<ion-card-content>-->
+                <!--Takip etmek istediğini aratarak, takip etmeye başlayabilmek için seçebilirsin.-->
+            <!--</ion-card-content>-->
+        <!--</ion-card>-->
+
+        <!--<ion-list *ngIf="userCategories.length">-->
+            <!--<ion-item-divider color="light">Takip Edilenler</ion-item-divider>-->
+            <!--<ion-item-sliding *ngFor="let category of userCategories">-->
+                <!--<ion-item>-->
+                    <!--<ion-icon [name]="category.icon" item-start></ion-icon>-->
+                    <!--{{ category.name }}-->
+                <!--</ion-item>-->
+                <!--<ion-item-options side="right">-->
+                    <!--<button ion-button color="red" (click)="deleteCategory(category)">-->
+                        <!--<ion-icon name="trash"></ion-icon>-->
+                        <!--Sil-->
+                    <!--</button>-->
+                <!--</ion-item-options>-->
+            <!--</ion-item-sliding>-->
+        <!--</ion-list>-->
+    <!--</div>-->
 </ion-content>

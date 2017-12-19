@@ -11,11 +11,12 @@ import {Category} from "../../../models/category";
 export class ManageCategoriesPage {
 
     public userCategories: Category[] = [];
-    public resultCategories: Category[] = [];
-    public isSearching: boolean = false;
-    private availableCategories: Category[] = [];
+    public categories: Category[] = [];
+    public clickedCategory: Category;
 
-    constructor(private auth: AuthProvider, private loadingCtrl: LoadingController)
+    constructor(private auth: AuthProvider, private loadingCtrl: LoadingController) {}
+
+    ionViewDidLoad()
     {
         this.initializeCategories();
     }
@@ -32,31 +33,20 @@ export class ManageCategoriesPage {
             this.userCategories = result.data;
 
             this.auth.request('GET', 'categories').then(result => {
-                this.availableCategories = result.data;
+                this.categories = result.data;
                 loading.dismiss();
             }).catch(() => loading.dismiss());
         }).catch(() => loading.dismiss());
     }
 
-    public searchCategories(event: any): void
+    public clickCategory(category: Category): void
     {
-        this.isSearching = true;
-
-        this.resultCategories = this.availableCategories.filter(category => {
-            return this.userCategories.indexOf(category) < 0;
-        });
-
-        let val = event.target.value;
-        if (val && val.trim() != '') {
-            this.resultCategories = this.resultCategories.filter((category) => {
-                return (category.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
-            });
-        }
+        this.clickedCategory = category;
     }
 
-    public cancelSearch(): void
+    public cancelCategory(): void
     {
-        this.isSearching = false;
+        this.clickedCategory = null;
     }
 
     public addCategory(category: Category): void
@@ -68,7 +58,6 @@ export class ManageCategoriesPage {
             'category_id': category.id
         }).then(() => {
             this.userCategories.push(category);
-            this.isSearching = false;
 
             loading.dismiss();
         }).catch(() => loading.dismiss());

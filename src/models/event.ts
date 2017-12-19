@@ -1,4 +1,3 @@
-import {CarbonDatetime} from "./carbon-datetime";
 import {Organizer} from "./organizer";
 import {Address} from "./address";
 
@@ -8,8 +7,8 @@ export interface Event {
     title: string,
     description: string,
     image: string,
-    started_at: CarbonDatetime | string,
-    ended_at: CarbonDatetime | string,
+    started_at: any,
+    ended_at: any,
     price: number,
     price_type: string,
     capacity: number,
@@ -18,5 +17,6 @@ export interface Event {
     address?: Address,
     user_id?: number,
     organizer_id?: number,
-    address_id?: number
+    address_id?: number,
+    category_ids?: number[]
 }

@@ -6,6 +6,7 @@ import {TabsPage} from '../pages/tabs/tabs';
 import {AuthProvider} from "../providers/auth/auth";
 import {SplashPage} from "../pages/splash/splash";
 import {TranslateService} from "@ngx-translate/core";
+import * as moment from "moment";
 
 @Component({
     templateUrl: 'app.html'
@@ -23,6 +24,7 @@ export class MyApp {
     ) {
         // Set default language.
         translate.setDefaultLang('tr');
+        moment.locale('tr');
 
         // Let's start to listen to auth status.
         auth.observable.subscribe(check => {

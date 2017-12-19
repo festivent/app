@@ -23,19 +23,28 @@
         <div *ngSwitchCase="'address'">
             <div *ngIf="!showAddressForm">
                 <ion-searchbar
-                        [(ngModel)]="searchingAddress"
+                        (ionInput)="searchAddresses($event)"
                         placeholder="Adres ara..."
                 ></ion-searchbar>
 
                 <ion-list>
+                    <button ion-item *ngFor="let address of resultAddresses" (click)="selectAddress(address)">
+                        {{ address.name }}
+                    </button>
                     <button ion-item (click)="showCreateAddressForm()">
-                        Adres bulunamadı, yeni oluştur.
+                        {{ resultAddresses.length ? 'Adres listede yok mu? Yeni oluştur.' : 'Adres bulunamadı. Yeni oluştur.' }}
                     </button>
                 </ion-list>
             </div>
 
             <ion-list *ngIf="showAddressForm">
                 <ion-item>
+                    <ion-label
+                            *ngIf="hasError('address.name')"
+                            color="danger"
+                            stacked>
+                        {{ errors['address.name'] }}
+                    </ion-label>
                     <ion-input
                             [disabled]="selectedAddress.id"
                             [(ngModel)]="selectedAddress.name"
@@ -43,6 +52,12 @@
                             type="text"></ion-input>
                 </ion-item>
                 <ion-item>
+                    <ion-label
+                            *ngIf="hasError('address.address')"
+                            color="danger"
+                            stacked>
+                        {{ errors['address.address'] }}
+                    </ion-label>
                     <ion-textarea
                             [disabled]="selectedAddress.id"
                             [(ngModel)]="selectedAddress.address"
@@ -50,6 +65,12 @@
                             type="text"></ion-textarea>
                 </ion-item>
                 <ion-item>
+                    <ion-label
+                            *ngIf="hasError('address.hint')"
+                            color="danger"
+                            stacked>
+                        {{ errors['address.hint'] }}
+                    </ion-label>
                     <ion-textarea
                             [disabled]="selectedAddress.id"
                             [(ngModel)]="selectedAddress.hint"
@@ -57,9 +78,20 @@
                             type="text"></ion-textarea>
                 </ion-item>
                 <ion-item>
+                    <ion-label
+                            *ngIf="hasError('address.province_id')"
+                            color="danger"
+                            stacked>
+                        {{ errors['address.province_id'] }}
+                    </ion-label>
                     <ion-label>İl</ion-label>
                     <ion-select
-                            [disabled]="selectedAddress.id"
+                            *ngIf="selectedAddress.id"
+                            [disabled]="true"
+                            placeholder="{{ selectedAddress.province.name }}"
+                    ></ion-select>
+                    <ion-select
+                            *ngIf="!selectedAddress.id"
                             [(ngModel)]="selectedAddress.province_id"
                             (ionChange)="selectedProvince()"
                     >
@@ -69,9 +101,20 @@
                     </ion-select>
                 </ion-item>
                 <ion-item>
+                    <ion-label
+                            *ngIf="hasError('address.county_id')"
+                            color="danger"
+                            stacked>
+                        {{ errors['address.county_id'] }}
+                    </ion-label>
                     <ion-label>İlçe</ion-label>
                     <ion-select
-                            [disabled]="selectedAddress.id"
+                            *ngIf="selectedAddress.id"
+                            [disabled]="true"
+                            placeholder="{{ selectedAddress.county.name }}"
+                    ></ion-select>
+                    <ion-select
+                            *ngIf="!selectedAddress.id"
                             [(ngModel)]="selectedAddress.county_id"
                     >
                         <ion-option *ngFor="let county of counties" [value]="county.id">
@@ -79,47 +122,93 @@
                         </ion-option>
                     </ion-select>
                 </ion-item>
+                <button ion-item (click)="cancelAddress()">
+                    <ion-icon name="close" item-start></ion-icon>
+                    Yeni bir adres seç veya oluştur
+                </button>
             </ion-list>
         </div>
 
         <ion-list *ngSwitchCase="'event'">
             <ion-item>
+                <ion-label
+                        *ngIf="hasError('title')"
+                        color="danger"
+                        stacked>
+                    {{ errors['title'] }}
+                </ion-label>
                 <ion-input
                         [(ngModel)]="event.title"
                         placeholder="Başlık *"
                         type="text"></ion-input>
             </ion-item>
             <ion-item>
+                <ion-label
+                        *ngIf="hasError('description')"
+                        color="danger"
+                        stacked>
+                    {{ errors['description'] }}
+                </ion-label>
                 <ion-textarea
                         [(ngModel)]="event.description"
                         placeholder="Açıklama"
                         type="text"></ion-textarea>
             </ion-item>
             <ion-item>
+                <ion-label
+                        *ngIf="hasError('started_at')"
+                        color="danger"
+                        stacked>
+                    {{ errors['started_at'] }}
+                </ion-label>
                 <ion-datetime
                         [(ngModel)]="event.started_at"
                         placeholder="Başlangıç Tarihi *"
                         displayFormat="DD/MM/YYYY HH:mm"></ion-datetime>
             </ion-item>
             <ion-item>
+                <ion-label
+                        *ngIf="hasError('ended_at')"
+                        color="danger"
+                        stacked>
+                    {{ errors['ended_at'] }}
+                </ion-label>
                 <ion-datetime
                         [(ngModel)]="event.ended_at"
                         placeholder="Bitiş Tarihi"
                         displayFormat="DD/MM/YYYY HH:mm"></ion-datetime>
             </ion-item>
             <ion-item>
+                <ion-label
+                        *ngIf="hasError('ended_at')"
+                        color="danger"
+                        stacked>
+                    {{ errors['ended_at'] }}
+                </ion-label>
                 <ion-input
                         [(ngModel)]="event.price"
                         placeholder="Fiyat (ücretsiz ise boş bırakın)"
                         type="number"></ion-input>
             </ion-item>
             <ion-item>
+                <ion-label
+                        *ngIf="hasError('capacity')"
+                        color="danger"
+                        stacked>
+                    {{ errors['capacity'] }}
+                </ion-label>
                 <ion-input
                         [(ngModel)]="event.capacity"
                         placeholder="Kapasite"
                         type="number"></ion-input>
             </ion-item>
             <ion-item>
+                <ion-label
+                        *ngIf="hasError('age_limit')"
+                        color="danger"
+                        stacked>
+                    {{ errors['age_limit'] }}
+                </ion-label>
                 <ion-input
                         [(ngModel)]="event.age_limit"
                         placeholder="Yaş Sınırı"
@@ -155,7 +244,7 @@
 
 <ion-footer>
     <div padding>
-        <button *ngIf="!canSubmit()" type="button" disabled ion-button block>
+        <button *ngIf="!canSubmit()" type="button" color="danger" disabled ion-button block>
             <em *ngIf="!isFilledAddressFields()">
                 Adres bilgileri eksik...
             </em>
@@ -169,7 +258,7 @@
             </em>
         </button>
 
-        <button *ngIf="canSubmit()" ion-button block>
+        <button *ngIf="canSubmit()" (click)="submit()" ion-button block>
             Oluştur
         </button>
     </div>

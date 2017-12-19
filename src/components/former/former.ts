@@ -62,8 +62,6 @@ export class FormerComponent
                     this.form.error(response);
                 }
 
-                console.log(response);
-
                 if (response instanceof HttpErrorResponse) {
                     if (response.error && typeof response.error.errors !== 'undefined') {
                         for (let name in response.error.errors) {
