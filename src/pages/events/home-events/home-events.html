@@ -1,18 +1,28 @@
-<!--
-  Generated template for the HomeEventsPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>homeEventsPage</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>Etkinlikler</ion-title>
+    </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+    <ion-card *ngFor="let event of events" (click)="openEvent(event)">
+        <img src="https://ionicframework.com/dist/preview-app/www/assets/img/card-saopaolo.png"/>
 
+        <ion-card-content>
+            <ion-card-title>{{ event.title }}</ion-card-title>
+            <p>{{ event.description }}</p>
+        </ion-card-content>
+
+        <ion-row>
+            <ion-col center text-center>
+                <ion-note>{{ event.address.name }}</ion-note>
+            </ion-col>
+            <ion-col center text-center>
+                <ion-note>{{ event.started_at.date }}</ion-note>
+            </ion-col>
+        </ion-row>
+    </ion-card>
 </ion-content>

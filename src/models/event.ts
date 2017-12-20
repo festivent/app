@@ -1,5 +1,6 @@
 import {Organizer} from "./organizer";
 import {Address} from "./address";
+import {Category} from "./category";
 
 export interface Event {
     id?: number,
@@ -18,5 +19,6 @@ export interface Event {
     user_id?: number,
     organizer_id?: number,
     address_id?: number,
-    category_ids?: number[]
+    category_ids?: number[],
+    categories?: Category[]
 }

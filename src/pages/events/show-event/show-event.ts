@@ -27,9 +27,7 @@ export class ShowEventPage
         private auth: AuthProvider,
         private loadingCtrl: LoadingController,
         private viewCtrl: ViewController)
-    {
-
-    }
+    {}
 
     ionViewDidLoad()
     {

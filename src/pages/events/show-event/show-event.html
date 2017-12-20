@@ -54,5 +54,42 @@
             {{ event.age_limit }}
         </ion-note>
     </ion-item>
-    <ion-item-divider color="light">Adres</ion-item-divider>
+    <div *ngIf="event.address">
+        <ion-item-divider color="light">Adres</ion-item-divider>
+        <ion-item>
+            Adı
+            <ion-note item-end>
+                {{ event.address.name }}
+            </ion-note>
+        </ion-item>
+        <ion-item>
+            <ion-note item-end>
+                {{ event.address.address }}
+            </ion-note>
+        </ion-item>
+        <ion-item *ngIf="event.address.hint">
+            <ion-note item-end>
+                {{ event.address.hint }}
+            </ion-note>
+        </ion-item>
+        <ion-item>
+            İl
+            <ion-note item-end>
+                {{ event.address.province.name }}
+            </ion-note>
+        </ion-item>
+        <ion-item>
+            İlçe
+            <ion-note item-end>
+                {{ event.address.county.name }}
+            </ion-note>
+        </ion-item>
+    </div>
+    <div *ngIf="event.categories">
+        <ion-item-divider color="light">Kategoriler</ion-item-divider>
+        <ion-item *ngFor="let category of event.categories">
+            <ion-icon [name]="category.icon" item-start></ion-icon>
+            {{ category.name }}
+        </ion-item>
+    </div>
 </ion-content>
